@@ -1,10 +1,13 @@
 package cn.zetark.oauth2.web.controller.oauth;
 
 import cn.zetark.oauth2.Constants;
+import cn.zetark.oauth2.entity.Status;
 import cn.zetark.oauth2.entity.User;
 import cn.zetark.oauth2.service.ClientService;
 import cn.zetark.oauth2.service.OAuthService;
 import cn.zetark.oauth2.service.UserService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.oltu.oauth2.as.issuer.MD5Generator;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl;
 import org.apache.oltu.oauth2.as.request.OAuthAuthzRequest;
@@ -56,7 +59,7 @@ public class AuthorizeController {
                 OAuthResponse response =
                         OAuthASResponse.errorResponse(HttpServletResponse.SC_BAD_REQUEST)
                                 .setError(OAuthError.TokenResponse.INVALID_CLIENT)
-                                .setErrorDescription(Constants.INVALID_CLIENT_DESCRIPTION)
+                                .setErrorDescription(Constants.INVALID_CLIENT_ID)
                                 .buildJSONMessage();
                 return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
             }
@@ -100,11 +103,13 @@ public class AuthorizeController {
             if (OAuthUtils.isEmpty(redirectUri)) {
                 //告诉客户端没有传入redirectUri直接报错
                 HttpHeaders responseHeaders = new HttpHeaders();
-                responseHeaders.add("Content-Type", "text/html; charset=utf-8");
-                ResponseEntity responseEntity = new ResponseEntity("缺少授权成功后的回调地址", responseHeaders, HttpStatus.NOT_FOUND);
-                return responseEntity;
+                responseHeaders.add("Content-Type", "application/json; charset=utf-8");
+                Status status = new Status();
+                status.setCode(HttpStatus.NOT_FOUND.value());
+                status.setMsg(Constants.INVALID_REDIRECT_URI);
+                Gson gson = new GsonBuilder().create();
+                return new ResponseEntity(gson.toJson(status), responseHeaders ,HttpStatus.NOT_FOUND);
             }
-
             //返回错误消息（如?error=）
             final OAuthResponse response =
                     OAuthASResponse.errorResponse(HttpServletResponse.SC_FOUND)

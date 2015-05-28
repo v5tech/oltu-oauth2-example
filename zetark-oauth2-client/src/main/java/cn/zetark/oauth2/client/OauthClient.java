@@ -98,9 +98,23 @@ public class OauthClient {
         System.out.println("Access Token: " + oauthResponse.getAccessToken());
         System.out.println("Expires In: " + oauthResponse.getExpiresIn());
 
+        getAuthedService(oauthResponse.getAccessToken());
+
         return oauthResponse;
     }
 
+    /**
+     * 测试开放接口服务
+     */
+    private static void getAuthedService(String accessToken){
+        ResteasyClient client = new ResteasyClientBuilder().build();
+        Response response = client.target(ClientParams.OAUTH_SERVICE_API)
+                .queryParam("access_token",accessToken)
+                .request()
+                .get();
+        System.out.println(response.getStatus());
+        System.out.println(response.readEntity(String.class));
+    }
 
     public static void main(String[] args) throws Exception {
 

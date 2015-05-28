@@ -10,6 +10,7 @@
             color: white;
             font-size: 18px;
             font-family: "Consolas";
+            margin: 20px;
         }
         h1{
             text-align: center;
@@ -32,7 +33,6 @@
     <a href="${pageContext.request.contextPath}/user">用户管理</a>
 </div>
 <pre>
-Oauth2 Server端执行流程
 
 1. 先注册应用
 
@@ -81,7 +81,7 @@ redirect_uri    http://aimeizi.net                              回调地址
 
 4. 测试accessToken
 
-http://localhost:8080/zetark-oauth2-server/userInfo?access_token=223ae05dfbb0794396fb60a0960c197e
+http://localhost:8080/zetark-oauth2-server/v1/openapi/userInfo?access_token=223ae05dfbb0794396fb60a0960c197e
 
 测试ok的话返回用户名信息,access_token=223ae05dfbb0794396fb60a0960c197e为上一步获取的access_token
 

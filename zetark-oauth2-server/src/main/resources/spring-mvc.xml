@@ -22,7 +22,6 @@
                                 expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
 
-
     <mvc:annotation-driven>
     </mvc:annotation-driven>
 
@@ -31,7 +30,6 @@
 
     <!-- 静态资源映射 -->
     <mvc:resources mapping="/static/**" location="/WEB-INF/static/"/>
-
 
     <!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
     <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"

@@ -2,7 +2,6 @@ package cn.zetark.oauth2.web.controller.oauth;
 
 import cn.zetark.oauth2.Constants;
 import cn.zetark.oauth2.service.OAuthService;
-import cn.zetark.oauth2.service.UserService;
 import org.apache.oltu.oauth2.as.issuer.MD5Generator;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuer;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl;
@@ -20,6 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,10 +33,6 @@ public class AccessTokenController {
 
     @Autowired
     private OAuthService oAuthService;
-
-    @Autowired
-    private UserService userService;
-
 
     @RequestMapping("/access")
     public ModelAndView access(Model model) {
@@ -56,7 +53,7 @@ public class AccessTokenController {
                 OAuthResponse response =
                         OAuthASResponse.errorResponse(HttpServletResponse.SC_BAD_REQUEST)
                                 .setError(OAuthError.TokenResponse.INVALID_CLIENT)
-                                .setErrorDescription(Constants.INVALID_CLIENT_DESCRIPTION)
+                                .setErrorDescription(Constants.INVALID_CLIENT_ID)
                                 .buildJSONMessage();
                 return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
             }
@@ -66,7 +63,7 @@ public class AccessTokenController {
                 OAuthResponse response =
                         OAuthASResponse.errorResponse(HttpServletResponse.SC_UNAUTHORIZED)
                                 .setError(OAuthError.TokenResponse.UNAUTHORIZED_CLIENT)
-                                .setErrorDescription(Constants.INVALID_CLIENT_DESCRIPTION)
+                                .setErrorDescription(Constants.INVALID_CLIENT_ID)
                                 .buildJSONMessage();
                 return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
             }
@@ -78,7 +75,7 @@ public class AccessTokenController {
                     OAuthResponse response = OAuthASResponse
                             .errorResponse(HttpServletResponse.SC_BAD_REQUEST)
                             .setError(OAuthError.TokenResponse.INVALID_GRANT)
-                            .setErrorDescription("错误的授权码")
+                            .setErrorDescription(Constants.INVALID_AUTH_CODE)
                             .buildJSONMessage();
                     return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
                 }
@@ -106,6 +103,18 @@ public class AccessTokenController {
                     .buildJSONMessage();
             return new ResponseEntity(res.getBody(), HttpStatus.valueOf(res.getResponseStatus()));
         }
+    }
+
+    /**
+     * 验证accessToken
+     *
+     * @param accessToken
+     * @return
+     */
+    @RequestMapping(value = "/checkAccessToken", method = RequestMethod.POST)
+    public ResponseEntity checkAccessToken(@RequestParam("accessToken") String accessToken) {
+        boolean b = oAuthService.checkAccessToken(accessToken);
+        return b ? new ResponseEntity(HttpStatus.valueOf(HttpServletResponse.SC_OK)) : new ResponseEntity(HttpStatus.valueOf(HttpServletResponse.SC_UNAUTHORIZED));
     }
 
 }

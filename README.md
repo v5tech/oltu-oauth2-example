@@ -4,14 +4,14 @@
 使用Apache Oltu 搭建Oauth2 Server及Client开放授权
 
 
-![](Oauth2Server-1.png)
-![](Oauth2Server-2.png)
+![](OAuth2Server-0.png)
+![](OAuth2Server-1.png)
 ![](OAuth2-login.png)
 
 
 Oauth2 Server端执行流程
 
-1. 先注册应用
+### 1. 先注册应用
 
 http://localhost:8080/zetark-oauth2-server/client
 
@@ -20,7 +20,7 @@ http://localhost:8080/zetark-oauth2-server/client
 client_id               c1ebe466-1cdc-4bd3-ab69-77c3561b9dee    应用id
 client_secret           d8346ea2-6017-43ed-ad68-19c0f971738b    应用secret
 
-2. 请求授权码
+### 2. 请求授权码
 
 http://localhost:8080/zetark-oauth2-server/authorize?client_id=c1ebe466-1cdc-4bd3-ab69-77c3561b9dee&response_type=code&redirect_uri=http://aimeizi.net
 
@@ -38,7 +38,7 @@ http://aimeizi.net/?code=63910432da9186b22b1ad888d55ae8ae
 
 这里code=63910432da9186b22b1ad888d55ae8ae 即授权码
 
-3. 换取accessToken (POST操作)
+### 3. 换取accessToken (POST操作)
 
 首先GET方式请求http://localhost:8080/zetark-oauth2-server/access会打开一个表单在该表单中填入必填项，具体表单参数详见说明部分
 
@@ -56,9 +56,9 @@ redirect_uri    http://aimeizi.net                              回调地址
 
 {"expires_in":3600,"access_token":"223ae05dfbb0794396fb60a0960c197e"}
 
-4. 测试accessToken
+### 4. 使用accessToken测试开放数据服务
 
-http://localhost:8080/zetark-oauth2-server/userInfo?access_token=223ae05dfbb0794396fb60a0960c197e
+http://localhost:8080/zetark-oauth2-server/v1/openapi/userInfo?access_token=223ae05dfbb0794396fb60a0960c197e
 
 测试ok的话返回用户名信息,access_token=223ae05dfbb0794396fb60a0960c197e为上一步获取的access_token
 

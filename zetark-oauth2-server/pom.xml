@@ -23,6 +23,12 @@
             <version>1.0.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.oltu.oauth2</groupId>
+            <artifactId>org.apache.oltu.oauth2.common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -109,6 +115,12 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
         </dependency>
 
     </dependencies>

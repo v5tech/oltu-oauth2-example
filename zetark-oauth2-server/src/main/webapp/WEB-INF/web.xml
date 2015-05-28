@@ -44,6 +44,17 @@
     </filter-mapping>
     <!-- 设置servlet编码结束 -->
 
+    <!-- OAuth Server AccessToken 验证过滤器-->
+    <filter>
+        <filter-name>oauth2</filter-name>
+        <filter-class>cn.zetark.oauth2.web.filter.Oauth2Filter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>oauth2</filter-name>
+        <url-pattern>/v1/openapi/*</url-pattern>
+    </filter-mapping>
+
+    <!-- Spring MVC 控制器-->
     <servlet>
         <servlet-name>spring</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
