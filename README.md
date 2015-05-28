@@ -3,11 +3,13 @@
 
 使用Apache Oltu 搭建Oauth2 Server及Client开放授权
 
+OAuth应用接入授权演示
+
 ![](oauth2.gif)
+
+纯代码方式接入OAuth演示
+
 ![](oauth2-client.gif)
-![](OAuth2Server-0.png)
-![](OAuth2Server-1.png)
-![](OAuth2-login.png)
 
 
 Oauth2 Server端执行流程
