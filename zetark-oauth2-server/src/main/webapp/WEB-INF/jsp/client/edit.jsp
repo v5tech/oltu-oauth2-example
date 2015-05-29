@@ -5,28 +5,28 @@
 </head>
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <div class="header clearfix">
-            <nav>
-                <ul class="nav nav-pills pull-right">
-                </ul>
-            </nav>
-            <h3 class="text-muted">OAuth2 Server 应用</h3>
-        </div>
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+            </ul>
+        </nav>
+        <h3 class="text-muted">OAuth2 Server 应用</h3>
+    </div>
 
-        <form:form method="post" commandName="client" cssClass="form-inline">
-            <form:hidden path="id"/>
-            <form:hidden path="clientId"/>
-            <form:hidden path="clientSecret"/>
+    <form:form method="post" commandName="client" cssClass="form-inline">
+        <form:hidden path="id"/>
+        <form:hidden path="clientId"/>
+        <form:hidden path="clientSecret"/>
 
-        <div class="form-group">
-            <form:label path="clientName">应用名：</form:label>
-            <form:input path="clientName"/>
-        </div>
+    <div class="form-group">
+        <form:label path="clientName">应用名：</form:label>
+        <form:input path="clientName"/>
+    </div>
 
         <form:button>${op}</form:button>
 
-        </form:form>
+    </form:form>
 
 <jsp:include page="../footer.jsp"/>

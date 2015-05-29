@@ -15,7 +15,7 @@
     </div>
 
     <c:if test="${not empty msg}">
-        <div class="alert alert-danger" role="alert">${msg}</div>
+    <div class="alert alert-danger" role="alert">${msg}</div>
     </c:if>
 
     <h3><a href="${pageContext.request.contextPath}/user/create">用户新增</a></h3>

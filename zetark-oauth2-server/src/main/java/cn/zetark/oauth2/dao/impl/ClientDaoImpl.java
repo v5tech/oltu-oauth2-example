@@ -19,7 +19,8 @@ public class ClientDaoImpl implements ClientDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    
+
+    @Override
     public Client createClient(final Client client) {
         final String sql = "insert into oauth2_client(client_name, client_id, client_secret) values(?,?,?)";
 
@@ -40,6 +41,7 @@ public class ClientDaoImpl implements ClientDao {
         return client;
     }
 
+    @Override
     public Client updateClient(Client client) {
         String sql = "update oauth2_client set client_name=?, client_id=?, client_secret=? where id=?";
         jdbcTemplate.update(
@@ -48,6 +50,7 @@ public class ClientDaoImpl implements ClientDao {
         return client;
     }
 
+    @Override
     public void deleteClient(Long clientId) {
         String sql = "delete from oauth2_client where id=?";
         jdbcTemplate.update(sql, clientId);
@@ -57,7 +60,7 @@ public class ClientDaoImpl implements ClientDao {
     public Client findOne(Long clientId) {
         String sql = "select id, client_name, client_id, client_secret from oauth2_client where id=?";
         List<Client> clientList = jdbcTemplate.query(sql, new BeanPropertyRowMapper(Client.class), clientId);
-        if(clientList.size() == 0) {
+        if (clientList.size() == 0) {
             return null;
         }
         return clientList.get(0);
@@ -74,7 +77,7 @@ public class ClientDaoImpl implements ClientDao {
     public Client findByClientId(String clientId) {
         String sql = "select id, client_name, client_id, client_secret from oauth2_client where client_id=?";
         List<Client> clientList = jdbcTemplate.query(sql, new BeanPropertyRowMapper(Client.class), clientId);
-        if(clientList.size() == 0) {
+        if (clientList.size() == 0) {
             return null;
         }
         return clientList.get(0);
@@ -85,7 +88,7 @@ public class ClientDaoImpl implements ClientDao {
     public Client findByClientSecret(String clientSecret) {
         String sql = "select id, client_name, client_id, client_secret from oauth2_client where client_secret=?";
         List<Client> clientList = jdbcTemplate.query(sql, new BeanPropertyRowMapper(Client.class), clientSecret);
-        if(clientList.size() == 0) {
+        if (clientList.size() == 0) {
             return null;
         }
         return clientList.get(0);

@@ -41,7 +41,8 @@
     </bean>
 
     <!-- 控制器异常处理 -->
-    <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+    <bean id="exceptionHandlerExceptionResolver"
+          class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
     </bean>
 
     <bean class="cn.zetark.oauth2.web.exception.DefaultExceptionHandler"/>

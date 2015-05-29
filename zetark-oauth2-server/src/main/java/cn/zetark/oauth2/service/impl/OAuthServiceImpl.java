@@ -32,12 +32,12 @@ public class OAuthServiceImpl implements OAuthService {
 
     @Override
     public String getUsernameByAuthCode(String authCode) {
-        return (String)cache.get(authCode).get();
+        return (String) cache.get(authCode).get();
     }
 
     @Override
     public String getUsernameByAccessToken(String accessToken) {
-        return (String)cache.get(accessToken).get();
+        return (String) cache.get(accessToken).get();
     }
 
     @Override

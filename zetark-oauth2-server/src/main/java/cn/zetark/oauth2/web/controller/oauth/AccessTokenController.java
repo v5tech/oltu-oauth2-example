@@ -15,6 +15,7 @@ import org.apache.oltu.oauth2.common.message.OAuthResponse;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -44,7 +45,11 @@ public class AccessTokenController {
     public HttpEntity token(HttpServletRequest request)
             throws URISyntaxException, OAuthSystemException {
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type","application/json; charset=utf-8");
+
         try {
+
             //构建OAuth请求
             OAuthTokenRequest oauthRequest = new OAuthTokenRequest(request);
 
@@ -55,7 +60,7 @@ public class AccessTokenController {
                                 .setError(OAuthError.TokenResponse.INVALID_CLIENT)
                                 .setErrorDescription(Constants.INVALID_CLIENT_ID)
                                 .buildJSONMessage();
-                return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
+                return new ResponseEntity(response.getBody(), headers, HttpStatus.valueOf(response.getResponseStatus()));
             }
 
             // 检查客户端安全KEY是否正确
@@ -65,7 +70,7 @@ public class AccessTokenController {
                                 .setError(OAuthError.TokenResponse.UNAUTHORIZED_CLIENT)
                                 .setErrorDescription(Constants.INVALID_CLIENT_ID)
                                 .buildJSONMessage();
-                return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
+                return new ResponseEntity(response.getBody(), headers, HttpStatus.valueOf(response.getResponseStatus()));
             }
 
             String authCode = oauthRequest.getParam(OAuth.OAUTH_CODE);
@@ -77,7 +82,7 @@ public class AccessTokenController {
                             .setError(OAuthError.TokenResponse.INVALID_GRANT)
                             .setErrorDescription(Constants.INVALID_AUTH_CODE)
                             .buildJSONMessage();
-                    return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
+                    return new ResponseEntity(response.getBody(), headers, HttpStatus.valueOf(response.getResponseStatus()));
                 }
             }
 
@@ -85,7 +90,6 @@ public class AccessTokenController {
             OAuthIssuer oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());
             final String accessToken = oauthIssuerImpl.accessToken();
             oAuthService.addAccessToken(accessToken, oAuthService.getUsernameByAuthCode(authCode));
-
 
             //生成OAuth响应
             OAuthResponse response = OAuthASResponse
@@ -95,13 +99,13 @@ public class AccessTokenController {
                     .buildJSONMessage();
 
             //根据OAuthResponse生成ResponseEntity
-            return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
+            return new ResponseEntity(response.getBody(), headers, HttpStatus.valueOf(response.getResponseStatus()));
 
         } catch (OAuthProblemException e) {
             //构建错误响应
             OAuthResponse res = OAuthASResponse.errorResponse(HttpServletResponse.SC_BAD_REQUEST).error(e)
                     .buildJSONMessage();
-            return new ResponseEntity(res.getBody(), HttpStatus.valueOf(res.getResponseStatus()));
+            return new ResponseEntity(res.getBody(), headers, HttpStatus.valueOf(res.getResponseStatus()));
         }
     }
 

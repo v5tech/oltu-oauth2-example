@@ -14,11 +14,11 @@ body {
     border-bottom: 1px solid #e5e5e5;
 }
 
-.label{
+.label {
     font-size: 18;
 }
 
-.alert{
+.alert {
     margin-top: 25;
 }
 
@@ -47,6 +47,7 @@ body {
 .marketing {
     margin: 40px 0;
 }
+
 .marketing p + h4 {
     margin-top: 28px;
 }
@@ -58,6 +59,7 @@ body {
         padding-right: 0;
         padding-left: 0;
     }
+
     .header {
         margin-bottom: 30px;
     }

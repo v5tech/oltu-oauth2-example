@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Administrator on 2015/5/28.
  */
-public class Status implements Serializable{
+public class Status implements Serializable {
 
     private int code;
     private String msg;

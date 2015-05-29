@@ -5,29 +5,32 @@
     <meta charset="UTF-8">
     <title>Oauth2 Server 端流程</title>
     <style type="text/css" rel="stylesheet">
-        body{
+        body {
             background-color: black;
             color: white;
             font-size: 18px;
             font-family: "Consolas";
             margin: 20px;
         }
-        h1{
+
+        h1 {
             text-align: center;
         }
-        a{
+
+        a {
             color: white;
             font-size: 18px;
             cursor: pointer;
             text-decoration: none;
         }
-        div{
+
+        div {
             float: right;
         }
     </style>
 </head>
 <body>
-<h1>Oauth2 Server 端流程</h1>
+<h1>OAuth2 Server 端流程</h1>
 <div>
     <a href="${pageContext.request.contextPath}/client">应用管理</a>
     <a href="${pageContext.request.contextPath}/user">用户管理</a>
@@ -45,7 +48,7 @@ client_secret           d8346ea2-6017-43ed-ad68-19c0f971738b    应用secret
 
 2. 请求授权码
 
-http://localhost:8080/zetark-oauth2-server/authorize?client_id=c1ebe466-1cdc-4bd3-ab69-77c3561b9dee&response_type=code&redirect_uri=http://aimeizi.net
+http://localhost:8080/zetark-oauth2-server/authorize?client_id=c1ebe466-1cdc-4bd3-ab69-77c3561b9dee&response_type=code&redirect_uri=http://notes.coding.me
 
 参数说明
 
@@ -57,9 +60,9 @@ redirect_uri            回调地址
 
 请求成功后会返回如下的页面:
 
-http://aimeizi.net/?code=63910432da9186b22b1ad888d55ae8ae
+http://notes.coding.me/?code=63910432da9186b22b1ad888d55ae8ae
 
-这里code=63910432da9186b22b1ad888d55ae8ae 即授权码
+这里code=63910432da9186b22b1ad888d55ae8ae即授权码
 
 3. 换取accessToken (POST操作)
 
@@ -73,7 +76,7 @@ client_id       c1ebe466-1cdc-4bd3-ab69-77c3561b9dee            应用id
 client_secret   d8346ea2-6017-43ed-ad68-19c0f971738b            应用secret
 grant_type      authorization_code                              用于传递授权码的参数名authorization_code
 code            63910432da9186b22b1ad888d55ae8ae                用户登录授权后的授权码
-redirect_uri    http://aimeizi.net                              回调地址
+redirect_uri    http://notes.coding.me                          回调地址
 
 最终返回如下数据
 

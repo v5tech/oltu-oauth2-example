@@ -51,6 +51,9 @@ public class AuthorizeController {
 
         try {
 
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type","application/json; charset=utf-8");
+
             //构建OAuth 授权请求
             OAuthAuthzRequest oauthRequest = new OAuthAuthzRequest(request);
 
@@ -61,11 +64,11 @@ public class AuthorizeController {
                                 .setError(OAuthError.TokenResponse.INVALID_CLIENT)
                                 .setErrorDescription(Constants.INVALID_CLIENT_ID)
                                 .buildJSONMessage();
-                return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
+                return new ResponseEntity(response.getBody(), headers, HttpStatus.valueOf(response.getResponseStatus()));
             }
 
             //如果用户没有登录，跳转到登陆页面
-            if(!login(request)) {//登录失败时跳转到登陆页面
+            if (!login(request)) {//登录失败时跳转到登陆页面
                 model.addAttribute("client", clientService.findByClientId(oauthRequest.getClientId()));
                 return "oauth2login";
             }
@@ -93,7 +96,8 @@ public class AuthorizeController {
             final OAuthResponse response = builder.location(redirectURI).buildQueryMessage();
 
             //根据OAuthResponse返回ResponseEntity响应
-            HttpHeaders headers = new HttpHeaders();
+            headers = new HttpHeaders();
+            headers.set("Content-Type","application/json; charset=utf-8");
             headers.setLocation(new URI(response.getLocationUri()));
             return new ResponseEntity(headers, HttpStatus.valueOf(response.getResponseStatus()));
         } catch (OAuthProblemException e) {
@@ -102,13 +106,13 @@ public class AuthorizeController {
             String redirectUri = e.getRedirectUri();
             if (OAuthUtils.isEmpty(redirectUri)) {
                 //告诉客户端没有传入redirectUri直接报错
-                HttpHeaders responseHeaders = new HttpHeaders();
-                responseHeaders.add("Content-Type", "application/json; charset=utf-8");
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Content-Type", "application/json; charset=utf-8");
                 Status status = new Status();
                 status.setCode(HttpStatus.NOT_FOUND.value());
                 status.setMsg(Constants.INVALID_REDIRECT_URI);
                 Gson gson = new GsonBuilder().create();
-                return new ResponseEntity(gson.toJson(status), responseHeaders ,HttpStatus.NOT_FOUND);
+                return new ResponseEntity(gson.toJson(status), headers, HttpStatus.NOT_FOUND);
             }
             //返回错误消息（如?error=）
             final OAuthResponse response =
@@ -121,29 +125,29 @@ public class AuthorizeController {
     }
 
     private boolean login(HttpServletRequest request) {
-        if("get".equalsIgnoreCase(request.getMethod())) {
-            request.setAttribute("error","非法的请求");
+        if ("get".equalsIgnoreCase(request.getMethod())) {
+            request.setAttribute("error", "非法的请求");
             return false;
         }
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
-            request.setAttribute("error","登录失败:用户名或密码不能为空");
+        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+            request.setAttribute("error", "登录失败:用户名或密码不能为空");
             return false;
         }
         try {
             // 写登录逻辑
             User user = userService.findByUsername(username);
-            if(user!=null){
-                if(!userService.checkUser(username,password,user.getSalt(),user.getPassword())){
-                    request.setAttribute("error","登录失败:密码不正确");
+            if (user != null) {
+                if (!userService.checkUser(username, password, user.getSalt(), user.getPassword())) {
+                    request.setAttribute("error", "登录失败:密码不正确");
                     return false;
-                }else{
+                } else {
                     return true;
                 }
-            }else{
-                request.setAttribute("error","登录失败:用户名不正确");
+            } else {
+                request.setAttribute("error", "登录失败:用户名不正确");
                 return false;
             }
         } catch (Exception e) {

@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2005-2012 https://github.com/zhangkaitao
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 package cn.zetark.oauth2.spring;
@@ -68,7 +68,7 @@ public class SpringCacheManagerWrapper implements CacheManager {
 
         @Override
         public int size() {
-            if(springCache.getNativeCache() instanceof Ehcache) {
+            if (springCache.getNativeCache() instanceof Ehcache) {
                 Ehcache ehcache = (Ehcache) springCache.getNativeCache();
                 return ehcache.getSize();
             }
@@ -77,7 +77,7 @@ public class SpringCacheManagerWrapper implements CacheManager {
 
         @Override
         public Set keys() {
-            if(springCache.getNativeCache() instanceof Ehcache) {
+            if (springCache.getNativeCache() instanceof Ehcache) {
                 Ehcache ehcache = (Ehcache) springCache.getNativeCache();
                 return new HashSet(ehcache.getKeys());
             }
@@ -86,7 +86,7 @@ public class SpringCacheManagerWrapper implements CacheManager {
 
         @Override
         public Collection values() {
-            if(springCache.getNativeCache() instanceof Ehcache) {
+            if (springCache.getNativeCache() instanceof Ehcache) {
                 Ehcache ehcache = (Ehcache) springCache.getNativeCache();
                 List keys = ehcache.getKeys();
                 if (!CollectionUtils.isEmpty(keys)) {

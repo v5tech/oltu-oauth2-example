@@ -15,7 +15,7 @@
     </div>
 
     <c:if test="${not empty msg}">
-        <div class="alert alert-danger" role="alert">${msg}</div>
+    <div class="alert alert-danger" role="alert">${msg}</div>
     </c:if>
 
     <div>
@@ -24,25 +24,25 @@
 
     <table class="table table-bordered table-hover table-condensed">
         <thead>
-            <tr>
-                <th>客户端名</th>
-                <th>客户端ID</th>
-                <th>客户端安全KEY</th>
-                <th>操作</th>
-            </tr>
+        <tr>
+            <th>客户端名</th>
+            <th>客户端ID</th>
+            <th>客户端安全KEY</th>
+            <th>操作</th>
+        </tr>
         </thead>
         <tbody>
-            <c:forEach items="${clientList}" var="client">
-                <tr>
-                    <td>${client.clientName}</td>
-                    <td>${client.clientId}</td>
-                    <td>${client.clientSecret}</td>
-                    <td>
-                        <a href="${pageContext.request.contextPath}/client/${client.id}/update">修改</a>
-                        <a href="${pageContext.request.contextPath}/client/${client.id}/delete">删除</a>
-                    </td>
-                </tr>
-            </c:forEach>
+        <c:forEach items="${clientList}" var="client">
+            <tr>
+                <td>${client.clientName}</td>
+                <td>${client.clientId}</td>
+                <td>${client.clientSecret}</td>
+                <td>
+                    <a href="${pageContext.request.contextPath}/client/${client.id}/update">修改</a>
+                    <a href="${pageContext.request.contextPath}/client/${client.id}/delete">删除</a>
+                </td>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 

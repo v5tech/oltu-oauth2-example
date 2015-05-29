@@ -34,7 +34,7 @@ public class PasswordHelper {
 
         user.setSalt(randomNumberGenerator.nextBytes().toHex());
 
-                String newPassword = new SimpleHash(
+        String newPassword = new SimpleHash(
                 algorithmName,
                 user.getPassword(),
                 ByteSource.Util.bytes(user.getCredentialsSalt()),
@@ -45,6 +45,7 @@ public class PasswordHelper {
 
     /**
      * 根据用户名和盐值加密
+     *
      * @param username
      * @param password
      * @param salt
@@ -53,7 +54,7 @@ public class PasswordHelper {
         String pwd = new SimpleHash(
                 algorithmName,
                 password,
-                ByteSource.Util.bytes(username+salt),
+                ByteSource.Util.bytes(username + salt),
                 hashIterations).toHex();
 
         return pwd;
