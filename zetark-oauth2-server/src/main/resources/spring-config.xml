@@ -39,7 +39,7 @@
 
         <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
         <property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}"/>
-
+        <property name="driverClassName" value="${druid.driverClassName}"/>
         <property name="validationQuery" value="${druid.validationQuery}"/>
         <property name="testWhileIdle" value="${druid.testWhileIdle}"/>
         <property name="testOnBorrow" value="${druid.testOnBorrow}"/>
